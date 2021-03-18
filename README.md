@@ -27,6 +27,8 @@ Climate data comes from National Oceanic and Atmospheric Administration,  OpenWe
 ## Work Distribution
 * Database: Zean Zhang
 
+* HTML Set-Up: Gretchen Anderson
+
 * Classification model: Gretchen Anderson
 
 * Linear Regression model: Zean Zhang
