@@ -1,5 +1,8 @@
 # Machine Learning Nice Ride Bike Sharing
 
+## Website
+[Nice Ride Bike Sharing](https://grand42.github.io/Machine_Learning-NiceRide/Webpages/index.html)
+
 ## Background: 
 Our group used machine learning to predict the number of bikes that are rented each day based on a number of inputs. Bike-Sharing has become increasingly popular in major cities. Here in the twin cities, we have the bike-sharing nonprofit Nice Ride MN. We want to analyze these data to draw some insights and help the Nice Ride to make better business decisions
 
