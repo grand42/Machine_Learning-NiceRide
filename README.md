@@ -24,19 +24,6 @@ Climate data comes from National Oceanic and Atmospheric Administration,  OpenWe
 - CSS
 - Tableau
 
-## Work Distribution
-* Database: Zean Zhang
-
-* HTML Set-Up: Gretchen Anderson
-
-* Classification model: Gretchen Anderson
-
-* Linear Regression model: Zean Zhang
-
-* Station Demand Analysis: Saif Ahmed
-
-* Visualizations: Richard Lee
-
 ## Analysis
 
 #### Setup Dependencies and Connect to Database
@@ -101,7 +88,7 @@ Climate data comes from National Oceanic and Atmospheric Administration,  OpenWe
       
 #### Clean and Transform the data
 
-For each of the models, calculations of the total daily rides, avg daily rides, and station demand was calculated and added to the data frames.  The date columns were converted into Datetime format using pd.to_datetime
+For each of the models, calculations of the total daily rides, avg daily rides, and station demand were calculated and added to the data frames.  The date columns were converted into Datetime format using pd.to_datetime
 
 #### Logistic Regression Model
 
