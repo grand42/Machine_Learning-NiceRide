@@ -3,7 +3,7 @@
 ## Background: 
 Our group used machine learning to predict the number of bikes that are rented each day based on a number of inputs. Bike-Sharing has become increasingly popular in major cities. Here in the twin cities, we have the bike-sharing nonprofit Nice Ride MN. We want to analyze these data to draw some insights and help the Nice Ride to make better business decisions
 
-* A linear regression model that predict the daily bike transaction based on daily weather inputs. 
+* A linear regression model that predicts the daily bike transaction based on daily weather inputs. 
 * A logistic regression model to classify whether daily bike use is above or below the average for the year. 
 * Analyzed the station demand to determine if adequate docks are provided at each station, does it has a seasonal demand change, and etc. 
 
@@ -141,3 +141,35 @@ Using Nice Ride 2017 bike data and 2017 weather data, a Linear Regression model 
         MSE = mean_squared_error(y_test_scaled, predictions)
         r2 = model.score(x_test_scaled, y_test_scaled)
         print(f"MSE: {MSE}, R2: {r2}")
+
+#### Station Demand Analysis
+
+The demand per station was analyzed to determine if adequate docks are provided at each location to meet demand. Coffman Union and Lake Street & Knox Ave S are the top two stations with high demand.
+
+	# Calculate Demand Difference: Inbound vs. Outbound Trips
+	sdf['demand_diff'] = sdf['Inbound trips']-sdf['Outbound trips']
+        plt.figure()
+        plt.hist(sdf['demand_diff'], bins=20, color = '#1989c8')
+        plt.ylabel('# of Stations')
+        plt.xlabel('# Inbound - # Outbound Trips')
+        plt.title('Demand Difference')
+        plt.show()
+![Demand Plot](Graphs&Tables/Demand_Diff.png)
+
+	# Dock availability
+	sdf['abslt_diff'] = sdf['demand_diff'].abs()
+        #dock availability vs demand difference
+        sdf['Docks'] = sdf['Total docks']/sdf['Total docks'].sum()
+        sdf['DemandDiff'] = sdf['abslt_diff']/sdf['abslt_diff'].sum()
+        seaborn_data_cleaned = (
+        sdf[['Name', 'Docks', 'DemandDiff']].set_index('Name').stack().reset_index()
+        	.rename(columns={'level_1':'Distribution', 0:'Proportion'}))
+        #graph
+        plt.figure(figsize=(8, 50))
+        station_list = (sdf.sort_values('DemandDiff', ascending=False)['Name'].tolist())
+        sns.barplot(y='Name', x='Proportion', hue='Distribution', 
+        data=seaborn_data_cleaned, order=station_list, color = '#1989c8')
+        plt.title('Dock Availability vs Demand Difference')
+        plt.show()
+![Station Availabity vs Station Demand](Graphs&Tables/Availability_v_Demand.png)
+
