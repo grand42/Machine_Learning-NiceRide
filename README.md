@@ -92,7 +92,8 @@ For each of the models, calculations of the total daily rides, avg daily rides, 
 
 #### Logistic Regression Model
 
-Using SKLearn, a logistic model was created to predict the demand for bike use based on the days weather.  The data was categorized as either above or below average demand.  Then using train_test_split, the data was split into train and test data to create the model.
+Using SKLearn, a logistic model was created to predict the demand for bike use based on the days weather.  The data was categorized as either above or below average demand.  Then using train_test_split, the data was split into train and test data to create the model. 
+The model had an accuracy score of 85%.
 
       from sklearn.model_selection import train_test_split
 
@@ -103,5 +104,40 @@ Using SKLearn, a logistic model was created to predict the demand for bike use b
       
       print(f"Training Data Score: {classifier.score(X_train, y_train)}")
       print(f"Testing Data Score: {classifier.score(X_test, y_test)}")
-      
-      
+
+The Minneapolis weather forecast API was then used to obtain the weather forecast for the week. The parameters were entered into the model to predict bike use for the incoming week.
+
+![Classification Model Final Table](Graphs&Tables/Weather_Classification_Table.PNG)
+
+#### Linear Regression Model
+
+Using Nice Ride 2017 bike data and 2017 weather data, a Linear Regression model was created to predict the daily bike use based on daily weather patterns. The linear regression model returned an R2 coefficient of 0.663 and a MSE of 0.331.
+
+	# Normalize the Data
+	from sklearn.preprocessing import StandardScaler
+        x_scaler = StandardScaler().fit(x_train)
+        y_scaler = StandardScaler().fit(y_train)
+        x_train_scaled = x_scaler.transform(x_train)
+        x_test_scaled = x_scaler.transform(x_test)
+        y_train_scaled = y_scaler.transform(y_train)
+        y_test_scaled = y_scaler.transform(y_test)
+
+	# Plot the results
+	from sklearn.linear_model import LinearRegression
+        model = LinearRegression()
+        model.fit(x_train_scaled, y_train_scaled)
+        plt.scatter(model.predict(x_train_scaled), model.predict(x_train_scaled) - y_train_scaled, c="blue", label="Training Data")
+        plt.scatter(model.predict(x_test_scaled), model.predict(x_test_scaled) - y_test_scaled, c="orange", label="Testing Data")
+        plt.legend()
+        plt.hlines(y=0, xmin=y_test_scaled.min(), xmax=y_test_scaled.max())
+        plt.title("Residual Plot")
+        plt.show()
+
+![Residual Plot](Graphs&Tables/Residual_Plot.png)
+
+	# Quanitfy the model using the scaled data
+	from sklearn.metrics import mean_squared_error
+        predictions = model.predict(x_test_scaled)
+        MSE = mean_squared_error(y_test_scaled, predictions)
+        r2 = model.score(x_test_scaled, y_test_scaled)
+        print(f"MSE: {MSE}, R2: {r2}")
